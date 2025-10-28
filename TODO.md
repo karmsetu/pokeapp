@@ -6,9 +6,9 @@
 
 1. **Pokédex App**
 
-- [] Search Pokémon by name or ID
+- [x] Search Pokémon by name or ID
 - [] Show sprite, type, stats (HP, Attack, etc.)
-- [] Add “favorite Pokémon” feature (stored locally with AsyncStorage)
+- [] Add “favorite Pokémon” feature
 
 2. **Pokémon Battle Simulator (Light Version)**
 

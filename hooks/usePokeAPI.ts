@@ -1,8 +1,7 @@
 // hooks/usePokeAPI.ts
+import { POKE_API } from '@/constants';
 import { useQuery } from '@tanstack/react-query';
 import { Pokemon, PokemonSpecies } from '../lib/pokemon';
-
-const POKE_API = 'https://pokeapi.co/api/v2';
 
 export const usePokemon = (id: number) => {
     return useQuery<Pokemon>({
