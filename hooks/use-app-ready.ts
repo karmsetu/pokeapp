@@ -23,13 +23,12 @@ export function useAppReady() {
                 // Simulate other async setup (e.g., check auth, load settings)
                 // await loadInitialData();
 
-                // Optional: small delay for perceived smoothness (remove if not needed)
-                await new Promise((resolve) => setTimeout(resolve, 300));
+                // Optional: prefetch a few common Pokémon (e.g., #1-10) for instant feel
+                // await prefetchInitialPokemon();
             } catch (e) {
-                console.warn('App ready error:', e);
+                console.warn('App prep error:', e);
             } finally {
                 setIsReady(true);
-                // Hide splash screen
                 await SplashScreen.hideAsync();
             }
         };

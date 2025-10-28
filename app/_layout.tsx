@@ -1,31 +1,31 @@
 // app/_layout.tsx
 import { useAppReady } from '@/hooks/use-app-ready';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import { Text, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import './global.css';
+
+const queryClient = new QueryClient();
 
 export default function RootLayout() {
-    const isAppReady = useAppReady();
+    const isReady = useAppReady();
 
-    if (!isAppReady) {
-        // This won't show because the native splash screen is still up
-        // But it's a fallback in case JS loads before splash hides
-        return (
-            <View className="flex-1 bg-white justify-center items-center">
-                <Text>Loading...</Text>
-            </View>
-        );
-    }
+    if (!isReady) return null; // Keep native splash screen visible
 
     return (
-        <SafeAreaProvider>
-            <StatusBar style="auto" />
-            <Stack>
-                <Stack.Screen name="index" options={{ headerShown: false }} />
-                <Stack.Screen name="home" options={{ headerShown: false }} />
-            </Stack>
-        </SafeAreaProvider>
+        <QueryClientProvider client={queryClient}>
+            <SafeAreaProvider>
+                <Stack>
+                    {/* Only declare root-level screens */}
+                    <Stack.Screen
+                        name="index"
+                        options={{ headerShown: false }}
+                    />
+                    {/* 
+            Screens inside (tabs) are handled by (tabs)/_layout.tsx — 
+            NO need to declare them here!
+          */}
+                </Stack>
+            </SafeAreaProvider>
+        </QueryClientProvider>
     );
 }

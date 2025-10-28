@@ -1,0 +1,99 @@
+// app/(tabs)/_layout.tsx
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Tabs } from 'expo-router';
+
+export default function TabLayout() {
+    // const tabs: {
+    //     name: string;
+    //     title: string;
+    //     iconName: 'home' | 'pokeball' | 'sword' | 'box' | 'horizon';
+    // }[] = [
+    //     { name: 'home', title: 'Home', iconName: 'home' },
+    //     { name: 'pokedex', title: 'Pokédex', iconName: 'pokeball' },
+    //     { name: 'battle', title: 'Battle', iconName: 'sword' },
+    //     { name: 'types', title: 'Types', iconName: 'box' },
+    //     { name: 'more', title: 'More', iconName: 'horizon' },
+    // ];
+    return (
+        <Tabs
+            screenOptions={{
+                tabBarActiveTintColor: '#3b82f6',
+                tabBarInactiveTintColor: '#94a3b8',
+                tabBarStyle: {
+                    backgroundColor: '#ffffff',
+                    borderTopWidth: 1,
+                    borderTopColor: '#e2e8f0',
+                    height: 60,
+                    paddingBottom: 6,
+                },
+                headerShown: false,
+            }}
+        >
+            <Tabs.Screen
+                name="pokedex"
+                options={{
+                    title: 'Pokédex',
+                    tabBarIcon: ({ color, size }) => (
+                        <MaterialCommunityIcons
+                            name="pokeball"
+                            color={color}
+                            size={size}
+                        />
+                    ),
+                }}
+            />
+            <Tabs.Screen
+                name="battle"
+                options={{
+                    title: 'Battle',
+                    tabBarIcon: ({ color, size }) => (
+                        <MaterialCommunityIcons
+                            name="sword"
+                            color={color}
+                            size={size}
+                        />
+                    ),
+                }}
+            />
+            <Tabs.Screen
+                name="home"
+                options={{
+                    title: 'Home',
+                    tabBarIcon: ({ color, size }) => (
+                        <MaterialCommunityIcons
+                            name="home"
+                            color={color}
+                            size={size}
+                        />
+                    ),
+                }}
+            />
+            <Tabs.Screen
+                name="types"
+                options={{
+                    title: 'Types',
+                    tabBarIcon: ({ color, size }) => (
+                        <MaterialCommunityIcons
+                            name="alpha-t-box"
+                            color={color}
+                            size={size}
+                        />
+                    ),
+                }}
+            />
+            <Tabs.Screen
+                name="more"
+                options={{
+                    title: 'More',
+                    tabBarIcon: ({ color, size }) => (
+                        <MaterialCommunityIcons
+                            name="dots-horizontal"
+                            color={color}
+                            size={size}
+                        />
+                    ),
+                }}
+            />
+        </Tabs>
+    );
+}
