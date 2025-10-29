@@ -1,6 +1,9 @@
 // components/PokemonSearch.tsx
 import { useDebounce } from '@/hooks/useDebounce';
 import { usePokemonSearch, usePokemonTypes } from '@/hooks/usePokemonSearch';
+import { EvilIcons } from '@expo/vector-icons';
+import { Image } from 'expo-image';
+import { Link } from 'expo-router';
 import { useMemo, useState } from 'react';
 import {
     ActivityIndicator,
@@ -11,6 +14,12 @@ import {
     View,
 } from 'react-native';
 
+// Helper: extract ID from PokeAPI URL
+const getIdFromUrl = (url: string): string => {
+    const parts = url.split('/');
+    return parseInt(parts[parts.length - 2], 10).toString();
+};
+
 export default function Pokedex() {
     const [search, setSearch] = useState('');
     const [selectedType, setSelectedType] = useState('');
@@ -18,12 +27,12 @@ export default function Pokedex() {
     const debouncedSearch = useDebounce(search, 400);
     const { data: typesData } = usePokemonTypes();
     const {
-        data: pokemon,
+        data: pokemonList,
         isLoading,
         isFetching,
     } = usePokemonSearch(debouncedSearch, selectedType);
 
-    // Get unique types (first 18 standard types)
+    // Get unique types
     const types = useMemo(() => {
         if (!typesData?.results) return [];
         return typesData.results
@@ -35,6 +44,54 @@ export default function Pokedex() {
     const clearFilters = () => {
         setSearch('');
         setSelectedType('');
+    };
+
+    const renderPokemonItem = ({
+        item,
+    }: {
+        item: { name: string; url: string };
+    }) => {
+        const id = getIdFromUrl(item.url);
+        const spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+
+        return (
+            <Link
+                href={{ pathname: '/pokemon/[id]', params: { id } }}
+                className="w-full m-3 shadow"
+            >
+                <View className="w-full flex-row items-center justify-between  bg-white rounded-xl p-3 mb-3 shadow-sm">
+                    <View className="flex-row">
+                        {/* Sprite */}
+                        <View className="w-24 h-24 justify-center items-center mr-3">
+                            <Image
+                                source={{ uri: spriteUrl }}
+                                style={{ width: 100, height: 100 }}
+                                contentFit="contain"
+                                transition={150}
+                                // placeholder={require('@/assets/placeholder.png')} // optional
+                            />
+                        </View>
+
+                        {/* Name + ID */}
+                        <View className="flex flex-col justify-center">
+                            <Text className="text-sm text-gray-500">#{id}</Text>
+                            <Text className="text-lg font-medium text-gray-800 capitalize">
+                                {item.name}
+                            </Text>
+                        </View>
+                    </View>
+
+                    {/* icon */}
+                    <View className="flex justify-start items-start">
+                        <EvilIcons
+                            name="external-link"
+                            size={24}
+                            color="black"
+                        />
+                    </View>
+                </View>
+            </Link>
+        );
     };
 
     return (
@@ -106,29 +163,13 @@ export default function Pokedex() {
                             Loading Pokémon...
                         </Text>
                     </View>
-                ) : pokemon?.length ? (
+                ) : pokemonList?.length ? (
                     <FlatList
-                        data={pokemon}
+                        data={pokemonList}
                         keyExtractor={(item) => item.name}
                         showsVerticalScrollIndicator={false}
                         contentContainerClassName="pb-4"
-                        renderItem={({ item }) => (
-                            <View className="flex-row items-center bg-white rounded-xl p-3 mb-3 shadow-sm">
-                                <View className="w-12 h-12 bg-gray-200 rounded-lg justify-center items-center mr-3">
-                                    <Text className="text-xs font-bold text-gray-500">
-                                        #
-                                        {item.url
-                                            ? item.url
-                                                  .split('/')
-                                                  .slice(-2, -1)[0]
-                                            : '?'}
-                                    </Text>
-                                </View>
-                                <Text className="text-lg font-medium text-gray-800 capitalize">
-                                    {item.name}
-                                </Text>
-                            </View>
-                        )}
+                        renderItem={renderPokemonItem} // ✅ Updated
                     />
                 ) : debouncedSearch || selectedType ? (
                     <View className="flex-1 justify-center items-center py-8">

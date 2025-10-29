@@ -45,7 +45,7 @@ export function usePokemonSearch(search: string, type: string) {
                 // Search all Pokémon (limited to first 1000)
                 const res = await fetch(`${POKE_API}/pokemon?limit=1000`);
                 const data = await res.json();
-                console.log({ pokemon: data });
+                // console.log({ pokemon: data });
                 return data.results.filter((p: any) =>
                     p.name.toLowerCase().includes(search.toLowerCase())
                 );
@@ -55,3 +55,31 @@ export function usePokemonSearch(search: string, type: string) {
         staleTime: 1000 * 60 * 5, // 5 minutes
     });
 }
+
+type GetPokemonDetailAPIResponse = {
+    id: number;
+    name: string;
+    sprites?: { front_default: string };
+    types: { name: string }[];
+    stats: [];
+    height: number;
+    weight: number;
+};
+
+export const getPokemonDetail = (id: string) => {
+    return useQuery<GetPokemonDetailAPIResponse>({
+        queryKey: ['pokemon', id],
+        queryFn: async (): Promise<GetPokemonDetailAPIResponse> => {
+            const response = await fetch(
+                `https://pokeapi.co/api/v2/pokemon/${id}`
+            );
+            if (!response.ok) {
+                throw new Error('Failed to fetch Pokémon');
+            }
+            return response.json();
+        },
+        enabled: !!id, // Prevents query if id is 0/null/undefined
+        staleTime: 5 * 60 * 1000, // 5 minutes
+        retry: 1,
+    });
+};
