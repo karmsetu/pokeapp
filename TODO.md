@@ -31,6 +31,6 @@
 
 5. **Pokémon Quiz App**
 
-- [] “Which Pokémon has the higher base HP?”
-- [] “Which type is super effective against Fire?”
-- [] Randomized questions from the API
+- [x] “Which Pokémon has the higher base HP?”
+- [x] “Which type is super effective against Fire?”
+- [x] Randomized questions from the API

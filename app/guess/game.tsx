@@ -1,4 +1,5 @@
 // app/guess/game.tsx
+import { useWinStreak } from '@/contexts/WinStreakContext';
 import MaskedView from '@react-native-masked-view/masked-view';
 import { useQuery } from '@tanstack/react-query';
 import { Image } from 'expo-image';
@@ -29,6 +30,8 @@ export default function GuessGameScreen() {
     const [submitted, setSubmitted] = useState(false);
     const [isCorrect, setIsCorrect] = useState(false);
 
+    const { incrementStreak, resetStreak } = useWinStreak();
+
     useEffect(() => {
         if (pokemon) {
             setGuess('');
@@ -46,6 +49,12 @@ export default function GuessGameScreen() {
 
         setIsCorrect(isRight);
         setSubmitted(true);
+
+        if (isRight) {
+            incrementStreak();
+        } else {
+            resetStreak();
+        }
 
         // if (!isRight) {
         //     Alert.alert('Incorrect!', `It was ${pokemon.name}! Try again.`);

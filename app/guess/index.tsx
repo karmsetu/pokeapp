@@ -1,29 +1,11 @@
 // app/guess/index.tsx
+import { useWinStreak } from '@/contexts/WinStreakContext';
+import { getWinStreakColor } from '@/lib/ui';
 import { Link } from 'expo-router';
 import { Text, TouchableOpacity, View } from 'react-native';
 
 export default function GuessPokemonScreen() {
-    const streak = 50;
-    const getWinStreakColor = (
-        streakCount: number
-    ): { text: string; bg: string } => {
-        if (streakCount <= 0) {
-            return { text: 'text-gray-700', bg: 'bg-gray-200' };
-        }
-        if (streakCount <= 2) {
-            return { text: 'text-emerald-700', bg: 'bg-emerald-100' };
-        }
-        if (streakCount <= 5) {
-            return { text: 'text-amber-700', bg: 'bg-amber-100' };
-        }
-        if (streakCount <= 10) {
-            return { text: 'text-orange-700', bg: 'bg-orange-100' };
-        }
-        if (streakCount <= 20) {
-            return { text: 'text-red-700', bg: 'bg-red-100' };
-        }
-        return { text: 'text-white', bg: 'bg-yellow-400' };
-    };
+    const { streak } = useWinStreak();
     const { bg, text } = getWinStreakColor(streak);
     return (
         <View className="flex-1 bg-gray-50 justify-center items-center p-6">

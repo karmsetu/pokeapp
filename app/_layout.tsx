@@ -1,4 +1,6 @@
 // app/_layout.tsx
+import { QuizProvider } from '@/contexts/QuizContext';
+import { WinStreakProvider } from '@/contexts/WinStreakContext';
 import { useAppReady } from '@/hooks/use-app-ready';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister';
@@ -31,19 +33,23 @@ export default function RootLayout() {
             client={queryClient}
             persistOptions={{ persister: asyncStoragePersister }}
         >
-            <SafeAreaProvider>
-                <Stack>
-                    {/* Only declare root-level screens */}
-                    <Stack.Screen
-                        name="index"
-                        options={{ headerShown: false }}
-                    />
-                    {/* 
+            <QuizProvider>
+                <WinStreakProvider>
+                    <SafeAreaProvider>
+                        <Stack>
+                            {/* Only declare root-level screens */}
+                            <Stack.Screen
+                                name="index"
+                                options={{ headerShown: false }}
+                            />
+                            {/* 
             Screens inside (tabs) are handled by (tabs)/_layout.tsx — 
             NO need to declare them here!
           */}
-                </Stack>
-            </SafeAreaProvider>
+                        </Stack>
+                    </SafeAreaProvider>
+                </WinStreakProvider>
+            </QuizProvider>
         </PersistQueryClientProvider>
     );
 }
