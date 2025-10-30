@@ -7,7 +7,7 @@
 1. **Pokédex App**
 
 - [x] Search Pokémon by name or ID
-- [] Show sprite, type, stats (HP, Attack, etc.)
+- [x] Show sprite, type, stats (HP, Attack, etc.)
 - [] Add “favorite Pokémon” feature
 
 2. **Pokémon Battle Simulator (Light Version)**
@@ -22,8 +22,11 @@
 
 4. **Guess the Pokémon Game**
 
+- [x] start button
+- [x] streak
+- [x] get random pokemon
 - [] Show a silhouette (sprite with brightness reduced)
-- [] User guesses the name
+- [x] User guesses the name
 - [] Reveal with animation (easy to do in Expo with `react-native-reanimated` or `moti`)
 
 5. **Pokémon Quiz App**
