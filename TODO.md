@@ -25,9 +25,9 @@
 - [x] start button
 - [x] streak
 - [x] get random pokemon
-- [] Show a silhouette (sprite with brightness reduced)
+- [x] Show a silhouette (sprite with brightness reduced)
 - [x] User guesses the name
-- [] Reveal with animation (easy to do in Expo with `react-native-reanimated` or `moti`)
+- [x] Reveal with animation (easy to do in Expo with `react-native-reanimated` or `moti`)
 
 5. **Pokémon Quiz App**
 

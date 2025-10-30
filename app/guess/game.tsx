@@ -1,9 +1,11 @@
 // app/guess/game.tsx
+import MaskedView from '@react-native-masked-view/masked-view';
 import { useQuery } from '@tanstack/react-query';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
+import { MotiImage, MotiView } from 'moti';
 import { useEffect, useState } from 'react';
-import { Alert, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 // Fetch a random Pokémon (ID 1–151 for simplicity)
 const useRandomPokemon = () => {
@@ -22,6 +24,7 @@ const useRandomPokemon = () => {
 export default function GuessGameScreen() {
     const router = useRouter();
     const { data: pokemon, isLoading, isError } = useRandomPokemon();
+    console.log({ pokemon });
     const [guess, setGuess] = useState('');
     const [submitted, setSubmitted] = useState(false);
     const [isCorrect, setIsCorrect] = useState(false);
@@ -44,9 +47,9 @@ export default function GuessGameScreen() {
         setIsCorrect(isRight);
         setSubmitted(true);
 
-        if (!isRight) {
-            Alert.alert('Incorrect!', `It was ${pokemon.name}! Try again.`);
-        }
+        // if (!isRight) {
+        //     Alert.alert('Incorrect!', `It was ${pokemon.name}! Try again.`);
+        // }
     };
 
     const nextPokemon = () => {
@@ -97,16 +100,35 @@ export default function GuessGameScreen() {
             {/* Silhouette / Blurred Sprite */}
             <View className="flex-1 justify-center items-center mb-6">
                 {pokemon.sprites?.front_default ? (
-                    <View className="w-48 h-48 bg-gray-800 rounded-2xl justify-center items-center overflow-hidden">
-                        {/* Optional: add blur with expo-blur later */}
-                        <Image
-                            source={{ uri: pokemon.sprites.front_default }}
-                            style={{ width: 120, height: 120, opacity: 0.15 }}
-                            contentFit="contain"
-                        />
-                        <Text className="absolute text-white text-opacity-60 text-lg">
-                            ???
-                        </Text>
+                    <View className="w-48 h-48 rounded-2xl justify-center items-center overflow-hidden bg-gray-200">
+                        {/* Show silhouette until submitted & correct */}
+                        {!submitted ? (
+                            <MotiView
+                                from={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ type: 'timing', duration: 500 }}
+                            >
+                                <PokemonSilhouette
+                                    spriteUri={pokemon.sprites.front_default}
+                                />
+                            </MotiView>
+                        ) : (
+                            <MotiImage
+                                from={{
+                                    opacity: 0,
+                                    scale: 0.9,
+                                    rotate: '10deg',
+                                }}
+                                animate={{
+                                    opacity: 1,
+                                    scale: 1,
+                                    rotate: '0deg',
+                                }}
+                                transition={{ type: 'spring', duration: 600 }}
+                                source={{ uri: pokemon.sprites.front_default }}
+                                style={{ width: 150, height: 150 }}
+                            />
+                        )}
                     </View>
                 ) : (
                     <View className="w-48 h-48 bg-gray-800 rounded-2xl justify-center items-center">
@@ -169,3 +191,20 @@ export default function GuessGameScreen() {
         </View>
     );
 }
+
+const PokemonSilhouette = ({ spriteUri }: { spriteUri: string }) => {
+    return (
+        <MaskedView
+            style={{ width: 150, height: 150 }}
+            maskElement={
+                <Image
+                    source={{ uri: spriteUri }}
+                    style={{ width: 150, height: 150 }}
+                    contentFit="contain"
+                />
+            }
+        >
+            <View style={{ flex: 1, backgroundColor: 'black' }} />
+        </MaskedView>
+    );
+};
