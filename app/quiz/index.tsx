@@ -9,9 +9,9 @@ export default function QuizHome() {
     const { bg, text } = getWinStreakColor(currentScore);
 
     return (
-        <View className="flex-1 bg-gray-50 justify-center items-center p-6 mt-10">
+        <View className="flex-1 bg-gray-50 justify-center items-center p-6 mt-10 dark:bg-dark-background">
             <View
-                className={`absolute top-5 left-3 ${bg} ${text} rounded-xl p-4`}
+                className={`absolute top-5 left-3 ${bg} ${text}  p-4 rounded-2xl`}
             >
                 <Text className={`text-md ${text}`}>
                     Highest Score: {highestScore}
@@ -20,9 +20,11 @@ export default function QuizHome() {
                     Current Score: {currentScore}
                 </Text>
             </View>
-            <View className="bg-white rounded-2xl p-8 w-full max-w-md items-center ">
-                <Text className="text-2xl font-bold mb-2">Pokémon Quiz</Text>
-                <Text className="text-gray-600 text-center mb-6">
+            <View className="bg-white rounded-2xl p-8 w-full max-w-md items-center dark:bg-dark-surface">
+                <Text className="text-2xl font-bold mb-2 dark:text-dark-text">
+                    Pokémon Quiz
+                </Text>
+                <Text className="text-gray-600 text-center mb-6 dark:text-dark-textSecondary">
                     Test your Pokémon knowledge! Types, names, stats & more.
                 </Text>
                 <Link href="/quiz/game" asChild>

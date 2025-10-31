@@ -1,10 +1,12 @@
 // app/guess/game.tsx
 import { useWinStreak } from '@/contexts/WinStreakContext';
+import AntDesign from '@expo/vector-icons/AntDesign';
 import MaskedView from '@react-native-masked-view/masked-view';
 import { useQuery } from '@tanstack/react-query';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { MotiImage, MotiView } from 'moti';
+import { useColorScheme } from 'nativewind';
 import { useEffect, useState } from 'react';
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 
@@ -29,6 +31,7 @@ export default function GuessGameScreen() {
     const [guess, setGuess] = useState('');
     const [submitted, setSubmitted] = useState(false);
     const [isCorrect, setIsCorrect] = useState(false);
+    const { colorScheme } = useColorScheme();
 
     const { incrementStreak, resetStreak } = useWinStreak();
 
@@ -94,13 +97,21 @@ export default function GuessGameScreen() {
     }
 
     return (
-        <View className="flex-1 bg-gray-50 p-4">
+        <View className="flex-1 bg-gray-50 p-4 dark:bg-dark-background mt-10">
             {/* Header */}
             <View className="flex-row justify-between items-center mb-6">
                 <TouchableOpacity onPress={goBack}>
-                    <Text className="text-blue-500 font-medium">← Back</Text>
+                    <Text className="text-[#316ff6] font-medium gap-2">
+                        <AntDesign
+                            name="arrow-left"
+                            className="border border-blue-500"
+                            size={12}
+                            color={'#316ff6'}
+                        />
+                        Back
+                    </Text>
                 </TouchableOpacity>
-                <Text className="text-lg font-bold text-gray-800">
+                <Text className="text-lg font-bold text-gray-800 dark:text-dark-textSecondary">
                     Guess the Pokémon
                 </Text>
                 <View className="w-12" />
@@ -150,8 +161,11 @@ export default function GuessGameScreen() {
             {!submitted ? (
                 <View className="gap-3">
                     <TextInput
-                        className="bg-white border border-gray-300 rounded-xl px-4 py-3 text-gray-800"
+                        className="bg-white border border-gray-300 rounded-xl px-4 py-3 text-gray-800 dark:text-white dark:bg-dark-surface dark:border-dark-border"
                         placeholder="Enter Pokémon name..."
+                        placeholderTextColor={
+                            colorScheme === 'dark' ? 'white' : 'black'
+                        }
                         value={guess}
                         onChangeText={setGuess}
                         onSubmitEditing={handleGuess}

@@ -36,7 +36,12 @@ export default function RootLayout() {
             <QuizProvider>
                 <WinStreakProvider>
                     <SafeAreaProvider>
-                        <Stack screenOptions={{ headerShown: false }}>
+                        <Stack
+                            screenOptions={{
+                                headerShown: false,
+                                statusBarHidden: true,
+                            }}
+                        >
                             {/* Only declare root-level screens */}
                             <Stack.Screen
                                 name="index"

@@ -1,8 +1,10 @@
 // app/quiz/game.tsx
 import { useQuiz } from '@/contexts/QuizContext';
 import { useRandomQuizQuestion } from '@/hooks/useQuizQuestions';
+import { AntDesign } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
+import { useColorScheme } from 'nativewind';
 import { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
@@ -13,6 +15,7 @@ export default function QuizGameScreen() {
     const { data: question, isLoading, refetch } = useRandomQuizQuestion();
     const [selected, setSelected] = useState<string | null>(null);
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+    const { colorScheme } = useColorScheme();
 
     const handleAnswer = (option: string) => {
         if (selected || !question) return;
@@ -50,19 +53,29 @@ export default function QuizGameScreen() {
     }
 
     return (
-        <View className="flex-1 bg-gray-50 p-4">
+        <View className="flex-1 bg-gray-50 p-4 mt-10 dark:bg-dark-background">
             {/* Header */}
             <View className="flex-row justify-between items-center mb-4">
                 <TouchableOpacity onPress={goBack}>
-                    <Text className="text-blue-500">← Back</Text>
+                    <Text className="text-blue-500">
+                        <AntDesign
+                            name="arrow-left"
+                            className="border border-blue-500"
+                            size={12}
+                            color={'#316ff6'}
+                        />
+                        Back
+                    </Text>
                 </TouchableOpacity>
-                <Text className="font-bold">Pokémon Quiz</Text>
+                <Text className="font-bold text-2xl dark:text-dark-textSecondary">
+                    Pokémon Quiz
+                </Text>
                 <Text className="text-orange-500">🔥 {currentScore}</Text>
             </View>
 
             {/* Question */}
             <View className="mb-6">
-                <Text className="text-xl font-bold text-center mb-4">
+                <Text className="text-xl font-bold text-center mb-4 dark:text-white">
                     {question.question}
                 </Text>
 
@@ -83,10 +96,11 @@ export default function QuizGameScreen() {
             {/* Options */}
             <View className="gap-3">
                 {question.options.map((option, i) => {
-                    let bg = 'bg-white';
+                    let bg =
+                        colorScheme === 'dark' ? 'bg-[#1e293b]' : 'bg-white';
                     if (selected) {
                         if (option === question.correctAnswer)
-                            bg = 'bg-green-100';
+                            bg = 'bg-green-100 dark:text-dark-background';
                         else if (option === selected) bg = 'bg-red-100';
                     }
 
@@ -95,9 +109,11 @@ export default function QuizGameScreen() {
                             key={i}
                             onPress={() => handleAnswer(option)}
                             disabled={!!selected}
-                            className={`${bg} p-4 rounded-xl border border-gray-200`}
+                            className={`${bg} p-4 rounded-xl border border-gray-200 dark:border-dark-border`}
                         >
-                            <Text className="text-lg capitalize">{option}</Text>
+                            <Text className="text-lg capitalize dark:text-dark-textSecondary font-bold">
+                                {option}
+                            </Text>
                         </TouchableOpacity>
                     );
                 })}

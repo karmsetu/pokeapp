@@ -4,6 +4,7 @@ import { usePokemonSearch, usePokemonTypes } from '@/hooks/usePokemonSearch';
 import { EvilIcons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { Link } from 'expo-router';
+import { useColorScheme } from 'nativewind';
 import { useMemo, useState } from 'react';
 import {
     ActivityIndicator,
@@ -23,6 +24,8 @@ const getIdFromUrl = (url: string): string => {
 export default function Pokedex() {
     const [search, setSearch] = useState('');
     const [selectedType, setSelectedType] = useState('');
+
+    const { colorScheme } = useColorScheme();
 
     const debouncedSearch = useDebounce(search, 400);
     const { data: typesData } = usePokemonTypes();
@@ -59,7 +62,7 @@ export default function Pokedex() {
                 href={{ pathname: '/pokemon/[id]', params: { id } }}
                 className="w-full m-3 shadow"
             >
-                <View className="w-full flex-row items-center justify-between  bg-white rounded-xl p-3 mb-3 ">
+                <View className="w-full flex-row items-center justify-between  bg-white dark:bg-[#0f1c38] rounded-xl p-3 mb-3 ">
                     <View className="flex-row">
                         {/* Sprite */}
                         <View className="w-24 h-24 justify-center items-center mr-3">
@@ -75,7 +78,7 @@ export default function Pokedex() {
                         {/* Name + ID */}
                         <View className="flex flex-col justify-center">
                             <Text className="text-sm text-gray-500">#{id}</Text>
-                            <Text className="text-lg font-medium text-gray-800 capitalize">
+                            <Text className="text-lg font-medium text-gray-800 dark:text-gray-50 capitalize">
                                 {item.name}
                             </Text>
                         </View>
@@ -86,7 +89,7 @@ export default function Pokedex() {
                         <EvilIcons
                             name="external-link"
                             size={24}
-                            color="black"
+                            color={colorScheme === 'dark' ? 'white' : 'black'}
                         />
                     </View>
                 </View>
@@ -95,13 +98,16 @@ export default function Pokedex() {
     };
 
     return (
-        <View className="flex-1 bg-gray-50  mt-10">
+        <View className="flex-1 bg-gray-50 dark:bg-[#0f172a]  mt-10">
             {/* Search Bar */}
-            <View className="p-4 bg-white border-b border-gray-200">
-                <View className="flex-row items-center bg-gray-100 rounded-full px-4 py-2">
+            <View className="p-4 bg-white  dark:bg-[#0f172a]">
+                <View className="flex-row items-center bg-gray-100 dark:bg-[#2c447c]   rounded-full px-4 py-2">
                     <TextInput
-                        className="flex-1 py-2 text-gray-800"
+                        className="flex-1 py-2 text-gray-800 dark:text-white"
                         placeholder="Search Pokémon..."
+                        placeholderTextColor={
+                            colorScheme === 'dark' ? 'white' : '#2c447c'
+                        }
                         value={search}
                         onChangeText={setSearch}
                         autoFocus
@@ -118,7 +124,7 @@ export default function Pokedex() {
 
             {/* Type Filters */}
             <View className="p-4">
-                <Text className="text-sm font-medium text-gray-600 mb-2">
+                <Text className="text-sm font-bold text-gray-600 dark:text-gray-200 mb-2">
                     Filter by Type:
                 </Text>
                 <FlatList
@@ -136,14 +142,14 @@ export default function Pokedex() {
                             className={`px-3 py-1.5 rounded-full ${
                                 selectedType === item
                                     ? 'bg-blue-500 border border-blue-600'
-                                    : 'bg-white border border-gray-300'
+                                    : 'bg-white dark:bg-[#2c447c] border border-gray-300 dark:border-[#2c447c]'
                             }`}
                         >
                             <Text
                                 className={`text-xs font-medium ${
                                     selectedType === item
                                         ? 'text-white'
-                                        : 'text-gray-700'
+                                        : 'text-gray-700 dark:text-gray-50'
                                 }`}
                             >
                                 {item.charAt(0).toUpperCase() + item.slice(1)}

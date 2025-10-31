@@ -51,10 +51,13 @@ export default function PokemonCardScreen() {
     if (!pokemon) {
         return (
             <View style={[styles.center, styles.padding]}>
-                <Text className="text-center">
+                <Text className="text-center dark:text-dark-text">
                     You sure this Pokémon exists?
                 </Text>
-                <Link href="/(tabs)/home" className="mt-2 text-blue-500">
+                <Link
+                    href="/(tabs)/home"
+                    className="mt-2 text-blue-500 dark:text-dark-text"
+                >
                     <Text>Go back home</Text>
                 </Link>
             </View>
@@ -68,15 +71,15 @@ export default function PokemonCardScreen() {
     const weight = (pokemon.weight / 10).toFixed(1); // hectograms → kilograms
 
     return (
-        <View className="bg-white rounded-2xl p-4 mb-4 mt-10 border border-gray-100">
+        <View className="bg-white h-full p-4 mb-4 mt-10 dark:bg-dark-background">
             {/* 🧾 Header: ID + Name */}
             <View className="flex-row justify-between items-start mb-3">
-                <View className="bg-gray-200 rounded-full px-3 py-1">
-                    <Text className="text-xs font-bold text-gray-700">
+                <View className="bg-gray-200 rounded-full px-3 py-1 dark:bg-dark-border">
+                    <Text className="text-xs font-bold text-gray-700 dark:text-dark-text dark:bg-dark-border">
                         #{id.toString().padStart(3, '0')}
                     </Text>
                 </View>
-                <Text className="text-xl font-bold text-gray-800 capitalize flex-1 text-center">
+                <Text className="text-xl font-bold text-gray-800 dark:text-dark-text capitalize flex-1 text-center">
                     {pokemon.name}
                 </Text>
                 <View className="w-8" /> {/* Spacer for alignment */}
@@ -108,7 +111,7 @@ export default function PokemonCardScreen() {
                             backgroundColor: TYPE_COLORS[type] || '#A0A0A0',
                         }}
                     >
-                        <Text className="text-white text-xs font-medium capitalize">
+                        <Text className="text-white text-xs font-medium capitalize dark:text-black">
                             {type}
                         </Text>
                     </View>
@@ -135,10 +138,10 @@ export default function PokemonCardScreen() {
                 ].map((stat) => (
                     <View key={stat.key} className="mb-2">
                         <View className="flex-row justify-between mb-1">
-                            <Text className="text-sm font-medium text-gray-700">
+                            <Text className="text-sm font-medium text-gray-700 dark:text-dark-text">
                                 {stat.name}
                             </Text>
-                            <Text className="text-sm font-bold text-gray-900">
+                            <Text className="text-sm font-bold text-gray-900 dark:text-dark-text">
                                 {statMap[stat.key] || 0}
                             </Text>
                         </View>
@@ -159,15 +162,19 @@ export default function PokemonCardScreen() {
             {/*  Height & Weight */}
             <View className="flex-row justify-between px-1">
                 <View className="items-center">
-                    <Text className="text-xs text-gray-500">HEIGHT</Text>
-                    <Text className="text-sm font-bold text-gray-800">
+                    <Text className="text-xs text-gray-500 dark:text-gray-300">
+                        HEIGHT
+                    </Text>
+                    <Text className="text-sm font-bold text-gray-800 dark:text-gray-400">
                         {height} m
                     </Text>
                 </View>
 
                 <View className="items-center">
-                    <Text className="text-xs text-gray-500">WEIGHT</Text>
-                    <Text className="text-sm font-bold text-gray-800">
+                    <Text className="text-xs text-gray-500 dark:text-gray-300">
+                        WEIGHT
+                    </Text>
+                    <Text className="text-sm font-bold text-gray-800 dark:text-gray-400">
                         {weight} kg
                     </Text>
                 </View>

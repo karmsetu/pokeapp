@@ -8,7 +8,7 @@ export default function GuessPokemonScreen() {
     const { streak } = useWinStreak();
     const { bg, text } = getWinStreakColor(streak);
     return (
-        <View className="flex-1 bg-gray-50 justify-center items-center p-6 mt-10">
+        <View className="flex-1 bg-gray-50 justify-center items-center p-6 mt-10 dark:bg-dark-background">
             <View className="absolute top-5 left-2">
                 <Text
                     className={`text-3xl font-semibold p-2 rounded-lg ${bg} ${text}`}
@@ -16,11 +16,11 @@ export default function GuessPokemonScreen() {
                     Win Streak: {streak}
                 </Text>
             </View>
-            <View className="bg-white rounded-2xl p-8  w-full max-w-md items-center">
-                <Text className="text-2xl font-bold text-gray-800 mb-2">
+            <View className="bg-white rounded-2xl p-8  w-full max-w-md items-center dark:bg-dark-surface">
+                <Text className="text-2xl font-bold text-gray-800 mb-2 dark:text-dark-textSecondary">
                     ❓ Guess the Pokémon
                 </Text>
-                <Text className="text-gray-600 text-center mb-6">
+                <Text className="text-gray-600 text-center mb-6 dark:text-dark-text">
                     Can you name this Pokémon from its silhouette?
                 </Text>
 

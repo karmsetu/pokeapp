@@ -1,19 +1,24 @@
 // app/(tabs)/_layout.tsx
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
+import { useColorScheme } from 'nativewind';
 
 export default function TabLayout() {
+    const { colorScheme } = useColorScheme();
     return (
         <Tabs
             screenOptions={{
                 tabBarActiveTintColor: '#3b82f6',
                 tabBarInactiveTintColor: '#94a3b8',
                 tabBarStyle: {
-                    backgroundColor: '#ffffff',
-                    borderTopWidth: 1,
-                    borderTopColor: '#e2e8f0',
+                    backgroundColor:
+                        colorScheme === 'light' ? '#ffffff' : '#111827',
+                    borderTopWidth: 2,
+                    borderTopColor:
+                        colorScheme === 'light' ? '#ffffff' : '#1e1a4d',
                     height: 60,
                     paddingBottom: 6,
+                    paddingTop: 5,
                 },
                 headerShown: false,
             }}

@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'expo-router';
+import { useColorScheme } from 'nativewind';
 import { useState } from 'react';
 import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
 
@@ -39,17 +40,18 @@ export default function TypeExplorerScreen() {
         queryKey: ['type', selectedType],
         queryFn: () => fetchTypeData(selectedType),
     });
+    const { colorScheme } = useColorScheme();
 
     const pokemons = data?.pokemon?.slice(0, 60) || [];
 
     return (
-        <View className="flex-1 bg-gray-50 p-4 mt-10">
+        <View className="flex-1 bg-gray-50 p-4 mt-10 dark:bg-dark-background">
             {/* Header */}
             <View className="mb-4">
-                <Text className="text-2xl font-extrabold text-gray-800">
+                <Text className="text-2xl font-extrabold text-gray-800 dark:text-dark-text">
                     Pokémon Type Explorer
                 </Text>
-                <Text className="text-gray-500 text-sm mt-1">
+                <Text className="text-gray-500 text-sm mt-1 dark:text-dark-textSecondary">
                     Tap a type to discover its Pokémon!
                 </Text>
             </View>
@@ -76,14 +78,16 @@ export default function TypeExplorerScreen() {
                                 style={{
                                     backgroundColor: isSelected
                                         ? bgColor
-                                        : '#e5e7eb',
+                                        : colorScheme === 'dark'
+                                          ? '#314158'
+                                          : '#d1d5dc',
                                 }}
                             >
                                 <Text
                                     className={`text-sm font-semibold capitalize ${
                                         isSelected
                                             ? 'text-white'
-                                            : 'text-gray-700'
+                                            : 'text-gray-700 dark:text-white'
                                     }`}
                                 >
                                     {type}
@@ -97,11 +101,13 @@ export default function TypeExplorerScreen() {
             {/* Pokémon Grid */}
             {isLoading ? (
                 <View className="flex-1 justify-center items-center">
-                    <Text className="text-gray-600">Loading Pokémon...</Text>
+                    <Text className="text-gray-600 dark:text-dark-text">
+                        Loading Pokémon...
+                    </Text>
                 </View>
             ) : isError ? (
                 <View className="flex-1 justify-center items-center">
-                    <Text className="text-red-500 text-center mb-3">
+                    <Text className="text-red-500 text-center mb-3 dark:text-dark-primary">
                         Failed to load Pokémon.
                     </Text>
                     <TouchableOpacity
@@ -135,13 +141,13 @@ export default function TypeExplorerScreen() {
                             >
                                 <TouchableOpacity
                                     activeOpacity={0.8}
-                                    className="bg-white p-3 mb-4 rounded-2xl flex-1 mx-1 items-center  border border-gray-100"
+                                    className="bg-white p-3 mb-4 rounded-2xl flex-1 mx-1 items-center  border border-gray-100 dark:bg-dark-surface dark:border-dark-border"
                                 >
                                     <Image
                                         source={{ uri: sprite }}
                                         style={{ width: 96, height: 96 }}
                                     />
-                                    <Text className="text-sm capitalize text-gray-800 mt-2 text-center font-medium">
+                                    <Text className="text-sm capitalize text-gray-800 dark:text-dark-text font-bold  mt-2 text-center">
                                         {item.pokemon.name}
                                     </Text>
                                 </TouchableOpacity>
