@@ -1,0 +1,1 @@
+**error #1**: `[Error: Couldn't find a navigation context. Have you wrapped your app with 'NavigationContainer'? See https://reactnavigation.org/docs/getting-started for setup instructions.]` - [src](https://github.com/expo/expo/issues/38423)

@@ -20,7 +20,7 @@ export default function QuizHome() {
                     Current Score: {currentScore}
                 </Text>
             </View>
-            <View className="bg-white rounded-2xl p-8 w-full max-w-md items-center shadow-sm">
+            <View className="bg-white rounded-2xl p-8 w-full max-w-md items-center ">
                 <Text className="text-2xl font-bold mb-2">Pokémon Quiz</Text>
                 <Text className="text-gray-600 text-center mb-6">
                     Test your Pokémon knowledge! Types, names, stats & more.

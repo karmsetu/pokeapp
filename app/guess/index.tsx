@@ -16,7 +16,7 @@ export default function GuessPokemonScreen() {
                     Win Streak: {streak}
                 </Text>
             </View>
-            <View className="bg-white rounded-2xl p-8 shadow-sm w-full max-w-md items-center">
+            <View className="bg-white rounded-2xl p-8  w-full max-w-md items-center">
                 <Text className="text-2xl font-bold text-gray-800 mb-2">
                     ❓ Guess the Pokémon
                 </Text>

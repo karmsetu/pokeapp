@@ -59,7 +59,7 @@ export default function Pokedex() {
                 href={{ pathname: '/pokemon/[id]', params: { id } }}
                 className="w-full m-3 shadow"
             >
-                <View className="w-full flex-row items-center justify-between  bg-white rounded-xl p-3 mb-3 shadow-sm">
+                <View className="w-full flex-row items-center justify-between  bg-white rounded-xl p-3 mb-3 ">
                     <View className="flex-row">
                         {/* Sprite */}
                         <View className="w-24 h-24 justify-center items-center mr-3">

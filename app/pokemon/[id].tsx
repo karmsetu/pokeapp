@@ -68,7 +68,7 @@ export default function PokemonCardScreen() {
     const weight = (pokemon.weight / 10).toFixed(1); // hectograms → kilograms
 
     return (
-        <View className="bg-white rounded-2xl p-4 mb-4 shadow-sm border border-gray-100">
+        <View className="bg-white rounded-2xl p-4 mb-4  border border-gray-100">
             {/* 🧾 Header: ID + Name */}
             <View className="flex-row justify-between items-start mb-3">
                 <View className="bg-gray-200 rounded-full px-3 py-1">

@@ -55,40 +55,44 @@ export default function TypeExplorerScreen() {
             </View>
 
             {/* Type Selector */}
-            <FlatList
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                data={TYPES}
-                keyExtractor={(t) => t}
-                className="mb-4"
-                renderItem={({ item: type }) => {
-                    const isSelected = selectedType === type;
-                    const bgColor = TYPE_COLORS[type];
-                    return (
-                        <TouchableOpacity
-                            onPress={() => setSelectedType(type)}
-                            className={`px-4 py-2 mr-2 rounded-full border ${
-                                isSelected
-                                    ? 'border-gray-300'
-                                    : 'border-transparent'
-                            }`}
-                            style={{
-                                backgroundColor: isSelected
-                                    ? bgColor
-                                    : '#e5e7eb',
-                            }}
-                        >
-                            <Text
-                                className={`text-sm font-semibold capitalize ${
-                                    isSelected ? 'text-white' : 'text-gray-700'
+            <View className="max-h-10 mb-4">
+                <FlatList
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    data={TYPES}
+                    keyExtractor={(t) => t}
+                    className=" border border-red-500 h-full"
+                    renderItem={({ item: type }) => {
+                        const isSelected = selectedType === type;
+                        const bgColor = TYPE_COLORS[type];
+                        return (
+                            <TouchableOpacity
+                                onPress={() => setSelectedType(type)}
+                                className={`px-4 py-2 mr-2 rounded-full border ${
+                                    isSelected
+                                        ? 'border-gray-300'
+                                        : 'border-transparent'
                                 }`}
+                                style={{
+                                    backgroundColor: isSelected
+                                        ? bgColor
+                                        : '#e5e7eb',
+                                }}
                             >
-                                {type}
-                            </Text>
-                        </TouchableOpacity>
-                    );
-                }}
-            />
+                                <Text
+                                    className={`text-sm font-semibold capitalize ${
+                                        isSelected
+                                            ? 'text-white'
+                                            : 'text-gray-700'
+                                    }`}
+                                >
+                                    {type}
+                                </Text>
+                            </TouchableOpacity>
+                        );
+                    }}
+                />
+            </View>
 
             {/* Pokémon Grid */}
             {isLoading ? (
@@ -131,7 +135,7 @@ export default function TypeExplorerScreen() {
                             >
                                 <TouchableOpacity
                                     activeOpacity={0.8}
-                                    className="bg-white p-3 mb-4 rounded-2xl flex-1 mx-1 items-center shadow-sm border border-gray-100"
+                                    className="bg-white p-3 mb-4 rounded-2xl flex-1 mx-1 items-center  border border-gray-100"
                                 >
                                     <Image
                                         source={{ uri: sprite }}
