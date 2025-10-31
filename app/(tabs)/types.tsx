@@ -61,7 +61,7 @@ export default function TypeExplorerScreen() {
                     showsHorizontalScrollIndicator={false}
                     data={TYPES}
                     keyExtractor={(t) => t}
-                    className=" border border-red-500 h-full"
+                    className="  h-full"
                     renderItem={({ item: type }) => {
                         const isSelected = selectedType === type;
                         const bgColor = TYPE_COLORS[type];

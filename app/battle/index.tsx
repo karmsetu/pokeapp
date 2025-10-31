@@ -65,9 +65,15 @@ const fetchPokemon = async (id: number): Promise<BattlePokemon> => {
     };
 };
 
-interface NavigationProp {
-    navigate: (screen: string, params?: any) => void;
-}
+type Player = {
+    name: string;
+    attack: number;
+    defense: number;
+    spriteBack: string;
+    spriteFront: string;
+    hp: number;
+    moves: { name: string; power: number }[];
+};
 
 const BattleScreen = () => {
     const router = useRouter();
@@ -108,8 +114,8 @@ const BattleScreen = () => {
         }
     }, [allPokemon]);
 
-    const playerActive = allPokemon?.[playerIndex];
-    const opponentActive = allPokemon?.[3 + opponentIndex]; // opponent starts at index 3
+    const playerActive = allPokemon?.[playerIndex] as Player;
+    const opponentActive = allPokemon?.[3 + opponentIndex] as Player; // opponent starts at index 3
 
     const calculateDamage = (
         attack: number,
@@ -123,7 +129,7 @@ const BattleScreen = () => {
         return Math.max(1, damage); // min 1 damage
     };
 
-    const handlePlayerMove = (move: { name: string; power: number }) => {
+    const handlePlayerMove = (move: Player['moves'][0]) => {
         if (!isPlayerTurn || isProcessing || !playerActive || !opponentActive)
             return;
 
@@ -205,6 +211,8 @@ const BattleScreen = () => {
                     Alert.alert('Defeat!', 'All your Pokémon fainted!', [
                         { text: 'OK' },
                     ]);
+                    router.push('/(tabs)/battle');
+
                     return;
                 }
             } else {
@@ -234,85 +242,97 @@ const BattleScreen = () => {
 
     return (
         <View className="flex-1 bg-gray-900 p-4">
-            {/* Opponent */}
-            <View className="items-end mb-8">
-                <Image
-                    source={{ uri: opponentActive.spriteFront }}
-                    className="w-32 h-32"
-                />
-                <View className="mt-2 w-48">
-                    <Text className="text-white font-bold">
-                        {opponentActive.name}
-                    </Text>
-                    <View className="flex-row items-center mt-1">
-                        <View className="w-32 h-3 bg-gray-700 rounded-full">
-                            <View
-                                className="h-full bg-red-500 rounded-full"
-                                style={{
-                                    width: `${(opponentCurrentHp / opponentActive.hp) * 100}%`,
-                                }}
-                            />
-                        </View>
-                        <Text className="text-white text-xs ml-2">
-                            {opponentCurrentHp} / {opponentActive.hp}
+            <View className="">
+                {/* Opponent */}
+                <View className="items-end mb-8">
+                    <Image
+                        source={{ uri: opponentActive.spriteFront }}
+                        className="w-32 h-32"
+                    />
+                    <View className="mt-2 w-48">
+                        <Text className="text-white font-bold">
+                            {opponentActive.name}
                         </Text>
+                        <View className="flex-row items-center mt-1">
+                            <View className="w-32 h-3 bg-gray-700 rounded-full">
+                                <View
+                                    className="h-full bg-red-500 rounded-full"
+                                    style={{
+                                        width: `${(opponentCurrentHp / opponentActive.hp) * 100}%`,
+                                    }}
+                                />
+                            </View>
+                            <Text className="text-white text-xs ml-2">
+                                {opponentCurrentHp} / {opponentActive.hp}
+                            </Text>
+                        </View>
                     </View>
                 </View>
-            </View>
 
-            {/* Battle Log (last 2 messages) */}
-            <View className="h-16 mb-4 justify-end">
-                {battleLog.slice(-2).map((msg, i) => (
-                    <Text key={i} className="text-yellow-300 text-sm">
-                        {msg}
-                    </Text>
-                ))}
-            </View>
-
-            {/* Player */}
-            <View className="items-start mt-auto">
-                <Image
-                    source={{ uri: playerActive.spriteBack }}
-                    className="w-32 h-32"
-                />
-                <View className="mt-2 w-48">
-                    <Text className="text-white font-bold">
-                        {playerActive.name}
-                    </Text>
-                    <View className="flex-row items-center mt-1">
-                        <View className="w-32 h-3 bg-gray-700 rounded-full">
-                            <View
-                                className="h-full bg-green-500 rounded-full"
-                                style={{
-                                    width: `${(playerCurrentHp / playerActive.hp) * 100}%`,
-                                }}
-                            />
-                        </View>
-                        <Text className="text-white text-xs ml-2">
-                            {playerCurrentHp} / {playerActive.hp}
+                {/* Battle Log (last 2 messages) */}
+                <View className="h-16 mb-4 justify-end">
+                    {battleLog.slice(-2).map((msg, i) => (
+                        <Text key={i} className="text-yellow-300 text-sm">
+                            {msg}
                         </Text>
+                    ))}
+                </View>
+
+                {/* Player */}
+                <View className="items-start mt-auto">
+                    <Image
+                        source={{ uri: playerActive.spriteBack }}
+                        className="w-32 h-32"
+                    />
+                    <View className="mt-2 w-48">
+                        <Text className="text-white font-bold">
+                            {playerActive.name}
+                        </Text>
+                        <View className="flex-row items-center mt-1">
+                            <View className="w-32 h-3 bg-gray-700 rounded-full">
+                                <View
+                                    className="h-full bg-green-500 rounded-full"
+                                    style={{
+                                        width: `${(playerCurrentHp / playerActive.hp) * 100}%`,
+                                    }}
+                                />
+                            </View>
+                            <Text className="text-white text-xs ml-2">
+                                {playerCurrentHp} / {playerActive.hp}
+                            </Text>
+                        </View>
                     </View>
                 </View>
             </View>
 
             {/* Moves */}
-            <View className="mt-4 flex-row flex-wrap justify-between">
-                {playerActive.moves.map((move, i) => (
-                    <TouchableOpacity
-                        key={i}
-                        disabled={!isPlayerTurn || isProcessing}
-                        onPress={() => handlePlayerMove(move)}
-                        className={`w-[48%] p-3 my-1 rounded-lg ${
-                            isPlayerTurn && !isProcessing
-                                ? 'bg-blue-600 active:bg-blue-700'
-                                : 'bg-gray-800 opacity-60'
-                        }`}
-                    >
-                        <Text className="text-white text-center capitalize">
-                            {move.name}
-                        </Text>
-                    </TouchableOpacity>
-                ))}
+            <View
+                className="border bottom-10  px-6   m-auto"
+                style={{
+                    position: 'absolute',
+                    right: '0%',
+                    left: '0%',
+                    bottom: '10%',
+                }}
+            >
+                <View className="mt-4 flex-row flex-wrap justify-between">
+                    {playerActive.moves.map((move, i) => (
+                        <TouchableOpacity
+                            key={i}
+                            disabled={!isPlayerTurn || isProcessing}
+                            onPress={() => handlePlayerMove(move)}
+                            className={`w-[48%] p-3 my-1 rounded-lg ${
+                                isPlayerTurn && !isProcessing
+                                    ? 'bg-blue-600 active:bg-blue-700'
+                                    : 'bg-gray-800 opacity-60'
+                            }`}
+                        >
+                            <Text className="text-white  capitalize font-semibold">
+                                {move.name}
+                            </Text>
+                        </TouchableOpacity>
+                    ))}
+                </View>
             </View>
         </View>
     );

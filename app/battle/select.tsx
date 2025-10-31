@@ -40,7 +40,7 @@ const TeamSelectionScreen = () => {
         data: pokemonList = [],
         isLoading,
         isError,
-    } = useQuery({
+    } = useQuery<unknown, Error, PokemonSummary[]>({
         queryKey: ['pokemon-list'],
         queryFn: fetchPokemonList,
         staleTime: 1000 * 60 * 5, // 5 minutes
@@ -49,7 +49,9 @@ const TeamSelectionScreen = () => {
     const filteredPokemon = useMemo(() => {
         if (!search) return pokemonList;
         const term = search.toLowerCase();
-        return pokemonList.filter((p) => p.name.toLowerCase().includes(term));
+        return (pokemonList as PokemonSummary[]).filter((p) =>
+            p.name.toLowerCase().includes(term)
+        );
     }, [search, pokemonList]);
 
     const toggleSelect = (id: number) => {
