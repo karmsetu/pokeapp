@@ -8,7 +8,7 @@ export default function MoreScreen() {
     const router = useRouter();
 
     return (
-        <View className="flex-1 bg-gray-50 p-4 gap-4">
+        <View className="flex-1 bg-gray-50 p-4 gap-4 mt-10">
             <TouchableOpacity
                 className="bg-white p-6 rounded-xl flex flex-row justify-between "
                 onPress={() => router.push('/guess')}

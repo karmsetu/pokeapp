@@ -9,7 +9,7 @@ export default function QuizHome() {
     const { bg, text } = getWinStreakColor(currentScore);
 
     return (
-        <View className="flex-1 bg-gray-50 justify-center items-center p-6">
+        <View className="flex-1 bg-gray-50 justify-center items-center p-6 mt-10">
             <View
                 className={`absolute top-5 left-3 ${bg} ${text} rounded-xl p-4`}
             >

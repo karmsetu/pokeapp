@@ -241,7 +241,7 @@ const BattleScreen = () => {
     }
 
     return (
-        <View className="flex-1 bg-gray-900 p-4">
+        <View className="flex-1 bg-gray-900 p-4 mt-10">
             <View className="">
                 {/* Opponent */}
                 <View className="items-end mb-8">

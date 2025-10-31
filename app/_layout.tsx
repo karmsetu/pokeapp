@@ -10,7 +10,7 @@ import { Stack } from 'expo-router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import './global.css';
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
             gcTime: 1000 * 60 * 60 * 24, // 24 hours
@@ -36,16 +36,16 @@ export default function RootLayout() {
             <QuizProvider>
                 <WinStreakProvider>
                     <SafeAreaProvider>
-                        <Stack>
+                        <Stack screenOptions={{ headerShown: false }}>
                             {/* Only declare root-level screens */}
                             <Stack.Screen
                                 name="index"
                                 options={{ headerShown: false }}
                             />
-                            {/* 
-            Screens inside (tabs) are handled by (tabs)/_layout.tsx — 
-            NO need to declare them here!
-          */}
+                            <Stack.Screen
+                                name="(tabs)"
+                                options={{ headerShown: false }}
+                            />
                         </Stack>
                     </SafeAreaProvider>
                 </WinStreakProvider>

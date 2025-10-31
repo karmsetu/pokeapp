@@ -43,7 +43,7 @@ export default function TypeExplorerScreen() {
     const pokemons = data?.pokemon?.slice(0, 60) || [];
 
     return (
-        <View className="flex-1 bg-gray-50 p-4">
+        <View className="flex-1 bg-gray-50 p-4 mt-10">
             {/* Header */}
             <View className="mb-4">
                 <Text className="text-2xl font-extrabold text-gray-800">

@@ -8,7 +8,7 @@ export default function GuessPokemonScreen() {
     const { streak } = useWinStreak();
     const { bg, text } = getWinStreakColor(streak);
     return (
-        <View className="flex-1 bg-gray-50 justify-center items-center p-6">
+        <View className="flex-1 bg-gray-50 justify-center items-center p-6 mt-10">
             <View className="absolute top-5 left-2">
                 <Text
                     className={`text-3xl font-semibold p-2 rounded-lg ${bg} ${text}`}

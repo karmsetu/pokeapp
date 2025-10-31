@@ -3,17 +3,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 
 export default function TabLayout() {
-    // const tabs: {
-    //     name: string;
-    //     title: string;
-    //     iconName: 'home' | 'pokeball' | 'sword' | 'box' | 'horizon';
-    // }[] = [
-    //     { name: 'home', title: 'Home', iconName: 'home' },
-    //     { name: 'pokedex', title: 'Pokédex', iconName: 'pokeball' },
-    //     { name: 'battle', title: 'Battle', iconName: 'sword' },
-    //     { name: 'types', title: 'Types', iconName: 'box' },
-    //     { name: 'more', title: 'More', iconName: 'horizon' },
-    // ];
     return (
         <Tabs
             screenOptions={{

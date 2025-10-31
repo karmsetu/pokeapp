@@ -91,7 +91,7 @@ const TeamSelectionScreen = () => {
     }
 
     return (
-        <View className="flex-1 bg-gray-900 p-4">
+        <View className="flex-1 bg-gray-900 p-4 mt-10">
             <Text className="text-white text-2xl font-bold text-center mb-4">
                 Choose Your Team (3 Pokémon)
             </Text>

@@ -3,7 +3,7 @@ import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 const battle = () => {
     return (
-        <View className="flex-1 bg-gray-50 justify-center items-center p-6">
+        <View className="flex-1 bg-gray-50 justify-center items-center p-6 mt-10">
             <View className="bg-white rounded-2xl p-8 w-full max-w-md items-center ">
                 <Text className="text-2xl font-bold mb-2">Pokémon Battle</Text>
                 {/* <Text className="text-gray-600 text-center mb-6">

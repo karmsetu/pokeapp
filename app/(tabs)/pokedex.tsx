@@ -95,7 +95,7 @@ export default function Pokedex() {
     };
 
     return (
-        <View className="flex-1 bg-gray-50">
+        <View className="flex-1 bg-gray-50  mt-10">
             {/* Search Bar */}
             <View className="p-4 bg-white border-b border-gray-200">
                 <View className="flex-row items-center bg-gray-100 rounded-full px-4 py-2">
